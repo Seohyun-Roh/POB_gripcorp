@@ -3,11 +3,17 @@ import ReactDOM from 'react-dom/client'
 import './styles/index.scss'
 import Routes from './routes'
 import reportWebVitals from './reportWebVitals'
+import { RecoilRoot } from 'recoil'
+import { BrowserRouter } from 'react-router-dom'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
-    <Routes />
+    <RecoilRoot>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
+    </RecoilRoot>
   </React.StrictMode>
 )
 
