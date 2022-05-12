@@ -9,4 +9,81 @@
   background-color: colors.$MAIN_BACKGROUND_COLOR;
   border-radius: 60px;
   box-shadow: rgba(100, 100, 111, 20%) 0 7px 29px 0;
+
+  .searchForm {
+    position: absolute;
+    top: 68px;
+    left: 0;
+    width: 360px;
+    height: 40px;
+    background-color: colors.$WHITE;
+
+    .searchInput {
+      margin-left: 40px;
+    }
+  }
+
+  .searchMain {
+    position: absolute;
+    top: 108px;
+    left: 0;
+    width: 360px;
+    height: 536px;
+    padding: 10px 30px;
+    overflow: scroll;
+    border: 5px solid colors.$WHITE;
+  }
+
+  .itemList {
+    position: absolute;
+    left: 0;
+    width: 350px;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 100px;
+    padding: 0 10px;
+    margin: 0 10px;
+    background-color: colors.$WHITE;
+    border-radius: 5px;
+
+    + .item {
+      margin-top: 10px;
+    }
+
+    img {
+      width: 70px;
+      height: 80px;
+      margin-right: 13px;
+    }
+
+    .content {
+      width: 180px;
+    }
+
+    .contentTitle {
+      margin-bottom: 8px;
+      overflow: hidden;
+      font-size: 18px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .contentDetail {
+      font-size: 15px;
+      color: colors.$GRAY6;
+
+      span:last-child {
+        margin-left: 5px;
+        font-size: 14px;
+      }
+    }
+
+    .favBtn {
+      margin-left: 13px;
+    }
+  }
 }

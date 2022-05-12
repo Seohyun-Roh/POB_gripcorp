@@ -1,6 +1,6 @@
-import { ChangeEvent, FormEvent } from 'react'
+import { ChangeEvent, FormEvent, RefObject } from 'react'
 
-import { useState } from 'hooks'
+import { useState, useRef, useEffect } from 'hooks'
 import { useRecoil } from 'hooks/state'
 import { movieListState } from 'states/movie'
 import { getMovieListApi } from 'services/movie'
@@ -8,6 +8,7 @@ import { getMovieListApi } from 'services/movie'
 import styles from './Search.module.scss'
 import Header from 'routes/_shared/Header'
 import TabBar from 'routes/_shared/TabBar'
+import Item from './Item'
 
 const Search = () => {
   const [searchInputval, setSearchInputVal] = useState('')
@@ -44,6 +45,26 @@ const Search = () => {
     }
   }
 
+  const loadMore = () => {
+    setCurrPage((prev) => prev + 1)
+  }
+
+  const pageEnd = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    let observer: IntersectionObserver
+
+    observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          loadMore()
+        }
+      },
+      { threshold: 1 }
+    )
+    observer.observe(pageEnd.current as Element)
+  }, [isLoading])
+
   return (
     <div className={styles.search}>
       <Header />
@@ -62,9 +83,13 @@ const Search = () => {
       <main className={styles.searchMain}>
         <ul className={styles.itemList}>
           {movieList.map((movie) => (
-            <li key={movie.imdbID}>{movie.Title}</li>
+            // <li key={movie.imdbID}>{movie.Title}</li>
+            <Item key={movie.imdbID} movie={movie} />
           ))}
         </ul>
+        <button type='button' ref={pageEnd}>
+          +
+        </button>
       </main>
       <TabBar />
     </div>
