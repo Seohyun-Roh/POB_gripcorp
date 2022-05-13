@@ -40,50 +40,85 @@
     width: 350px;
 
     .item {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      height: 100px;
-      padding: 0 10px;
-      margin: 0 10px;
-      background-color: colors.$WHITE;
-      border-radius: 5px;
-      box-shadow: rgba(100, 100, 111, 10%) 0 7px 29px 0;
+      position: relative;
 
       + .item {
         margin-top: 10px;
       }
 
-      img {
-        width: 70px;
-        height: 80px;
-        margin-right: 13px;
-      }
+      .itemDiv {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        height: 100px;
+        padding: 0 10px;
+        margin: 0 10px;
+        cursor: pointer;
+        background-color: colors.$WHITE;
+        border-radius: 5px;
+        box-shadow: rgba(100, 100, 111, 10%) 0 7px 29px 0;
 
-      .content {
-        width: 180px;
-      }
+        img {
+          width: 70px;
+          height: 80px;
+          margin-right: 13px;
+        }
 
-      .contentTitle {
-        margin-bottom: 8px;
-        overflow: hidden;
-        font-size: 18px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
+        .content {
+          width: 220px;
+        }
 
-      .contentDetail {
-        font-size: 15px;
-        color: colors.$GRAY6;
+        .contentTitle {
+          margin-bottom: 8px;
+          overflow: hidden;
+          font-size: 18px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
 
-        span:last-child {
-          margin-left: 5px;
-          font-size: 14px;
+        .contentDetail {
+          font-size: 15px;
+          color: colors.$GRAY6;
+
+          span:last-child {
+            margin-left: 5px;
+            font-size: 14px;
+          }
         }
       }
 
-      .favBtn {
-        margin-left: 13px;
+      .itemModal {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 1;
+        text-align: center;
+        background-color: colors.$WHITE;
+        border: 1px solid colors.$GRAYE;
+        border-radius: 3px;
+        box-shadow: rgba(100, 100, 111, 10%) 0 7px 29px 0;
+        opacity: 0;
+
+        .itemModalBtn {
+          display: block;
+          width: 70px;
+          height: 30px;
+          font-size: 12px;
+
+          + .itemModalBtn {
+            border-top: 1px solid colors.$GRAYE;
+          }
+
+          &:hover {
+            background-color: colors.$GRAYE;
+            transition: 400ms ease-in-out all;
+          }
+        }
+      }
+
+      & .isOpen {
+        opacity: 1;
+        transition: 200ms ease;
       }
     }
 

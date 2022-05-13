@@ -42,6 +42,8 @@ const Search = () => {
       } else {
         setIsErr(true)
       }
+    } catch {
+      setIsErr(true)
     } finally {
       setIsSubmitted(false)
       setIsLoading(true)
