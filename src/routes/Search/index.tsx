@@ -14,18 +14,15 @@ const Search = () => {
   const [movieList, setMovieList, resetMovieList] = useRecoil(movieListState)
   const [searchInputVal, setSearchInputVal] = useState<string>('')
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
-  const [currPage, setCurrPage] = useState<number>(1)
+  const [currPage, setCurrPage] = useState<number>(0)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [totalResults, setTotalResults] = useState<number>(0)
+  const [isErr, setIsErr] = useState<boolean>(false)
 
   const pageEnd = useRef(null)
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInputVal(e.target.value)
-  }
-
-  const loadMore = () => {
-    setCurrPage((prev) => prev + 1)
   }
 
   const loadMovies = async (page: number) => {
@@ -36,11 +33,14 @@ const Search = () => {
       })
 
       if (page === 1) {
-        setTotalResults(data.totalResults)
+        setTotalResults(Number(data.totalResults))
       }
 
       if (data.Response === 'True') {
         setMovieList((prev) => [...prev, ...data.Search])
+        setIsErr(false)
+      } else {
+        setIsErr(true)
       }
     } finally {
       setIsSubmitted(false)
@@ -48,19 +48,26 @@ const Search = () => {
     }
   }
 
-  useEffect(() => {
-    loadMovies(currPage)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currPage])
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     resetMovieList()
     setIsSubmitted(true)
     setCurrPage(1)
-    loadMovies(1)
+
+    if (currPage === 1) {
+      loadMovies(1)
+    }
   }
+
+  const loadMore = () => {
+    setCurrPage((prev) => prev + 1)
+  }
+
+  useEffect(() => {
+    loadMovies(currPage)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currPage])
 
   useEffect(() => {
     let observer: IntersectionObserver
@@ -71,7 +78,10 @@ const Search = () => {
           const target = entries[0]
 
           if (target.isIntersecting) {
-            if (currPage * 10 < totalResults) {
+            if ((currPage + 1) * 10 >= totalResults) {
+              setIsLoading(false)
+              observer.unobserve(pageEnd.current as unknown as Element)
+            } else {
               loadMore()
             }
           }
@@ -100,7 +110,7 @@ const Search = () => {
         </button>
       </form>
       <main className={styles.searchMain}>
-        {movieList.length ? (
+        {movieList.length > 0 && (
           <ul className={styles.itemList}>
             {movieList.map((movie, idx) => {
               const key = `movie-${idx}`
@@ -110,9 +120,8 @@ const Search = () => {
               {isLoading && 'Loading... 😊'}
             </li>
           </ul>
-        ) : (
-          <div>에러 메시지</div>
         )}
+        {(!movieList.length || isErr) && <div className={styles.errMsg}>검색 결과가 없습니다.</div>}
       </main>
       <TabBar />
     </div>
