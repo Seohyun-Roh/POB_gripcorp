@@ -1,8 +1,6 @@
 import { axios } from 'hooks/worker'
 import { IMovieAPIRes } from 'types/movie.d'
 
-// http://www.omdbapi.com/?apikey=92e32667&s={검색어}&page={페이지번호(1~100)}
-
 const MOVIE_BASE_URL = 'http://www.omdbapi.com/'
 
 interface Params {
