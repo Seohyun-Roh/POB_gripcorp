@@ -6,11 +6,6 @@ interface Props {
   movie: IMovieItem
 }
 
-// Title: string
-//   Year: string
-//   Type: string
-//   Poster: string
-
 const Item = ({ movie }: Props) => {
   const { Title: title, Year: year, Type: type, Poster: poster } = movie
   return (

@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, RefObject } from 'react'
+import { ChangeEvent, FormEvent } from 'react'
 
 import { useState, useRef, useEffect } from 'hooks'
 import { useRecoil } from 'hooks/state'
@@ -11,59 +11,78 @@ import TabBar from 'routes/_shared/TabBar'
 import Item from './Item'
 
 const Search = () => {
-  const [searchInputval, setSearchInputVal] = useState('')
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [currPage, setCurrPage] = useState(1)
-  const [movieList, setMovieList] = useRecoil(movieListState)
-  const [errMessage, setErrMessage] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [movieList, setMovieList, resetMovieList] = useRecoil(movieListState)
+  const [searchInputVal, setSearchInputVal] = useState<string>('')
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
+  const [currPage, setCurrPage] = useState<number>(1)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [totalResults, setTotalResults] = useState<number>(0)
+
+  const pageEnd = useRef(null)
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInputVal(e.currentTarget.value)
-    setCurrPage(1)
-  }
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsSubmitted(true)
-
-    try {
-      const { data } = await getMovieListApi({
-        s: searchInputval,
-        page: currPage,
-      })
-
-      if (data.Response === 'True') {
-        setMovieList(data.Search)
-      } else {
-        setErrMessage(data.Error)
-      }
-    } catch (err) {
-      setErrMessage('잘못된 접근입니다.')
-    } finally {
-      setIsSubmitted(false)
-    }
+    setSearchInputVal(e.target.value)
   }
 
   const loadMore = () => {
     setCurrPage((prev) => prev + 1)
   }
 
-  const pageEnd = useRef<HTMLButtonElement>(null)
+  const loadMovies = async (page: number) => {
+    try {
+      const { data } = await getMovieListApi({
+        s: searchInputVal,
+        page,
+      })
+
+      if (page === 1) {
+        setTotalResults(data.totalResults)
+      }
+
+      if (data.Response === 'True') {
+        setMovieList((prev) => [...prev, ...data.Search])
+      }
+    } finally {
+      setIsSubmitted(false)
+      setIsLoading(true)
+    }
+  }
+
+  useEffect(() => {
+    loadMovies(currPage)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currPage])
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    resetMovieList()
+    setIsSubmitted(true)
+    setCurrPage(1)
+    loadMovies(1)
+  }
 
   useEffect(() => {
     let observer: IntersectionObserver
 
-    observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          loadMore()
-        }
-      },
-      { threshold: 1 }
-    )
-    observer.observe(pageEnd.current as Element)
-  }, [isLoading])
+    if (pageEnd.current) {
+      observer = new IntersectionObserver(
+        async (entries) => {
+          const target = entries[0]
+
+          if (target.isIntersecting) {
+            if (currPage * 10 < totalResults) {
+              loadMore()
+            }
+          }
+        },
+        { threshold: 1.0 }
+      )
+
+      observer.observe(pageEnd.current)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalResults])
 
   return (
     <div className={styles.search}>
@@ -72,7 +91,7 @@ const Search = () => {
         <input
           type='text'
           placeholder='search'
-          value={searchInputval}
+          value={searchInputVal}
           onChange={handleInputChange}
           className={styles.searchInput}
         />
@@ -81,15 +100,19 @@ const Search = () => {
         </button>
       </form>
       <main className={styles.searchMain}>
-        <ul className={styles.itemList}>
-          {movieList.map((movie) => (
-            // <li key={movie.imdbID}>{movie.Title}</li>
-            <Item key={movie.imdbID} movie={movie} />
-          ))}
-        </ul>
-        <button type='button' ref={pageEnd}>
-          +
-        </button>
+        {movieList.length ? (
+          <ul className={styles.itemList}>
+            {movieList.map((movie, idx) => {
+              const key = `movie-${idx}`
+              return <Item key={key} movie={movie} />
+            })}
+            <li className={styles.observeLi} ref={pageEnd}>
+              {isLoading && 'Loading... 😊'}
+            </li>
+          </ul>
+        ) : (
+          <div>에러 메시지</div>
+        )}
       </main>
       <TabBar />
     </div>

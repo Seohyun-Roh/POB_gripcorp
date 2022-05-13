@@ -38,52 +38,62 @@
     position: absolute;
     left: 0;
     width: 350px;
-  }
 
-  .item {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    height: 100px;
-    padding: 0 10px;
-    margin: 0 10px;
-    background-color: colors.$WHITE;
-    border-radius: 5px;
+    .item {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      height: 100px;
+      padding: 0 10px;
+      margin: 0 10px;
+      background-color: colors.$WHITE;
+      border-radius: 5px;
+      box-shadow: rgba(100, 100, 111, 10%) 0 7px 29px 0;
 
-    + .item {
-      margin-top: 10px;
-    }
+      + .item {
+        margin-top: 10px;
+      }
 
-    img {
-      width: 70px;
-      height: 80px;
-      margin-right: 13px;
-    }
+      img {
+        width: 70px;
+        height: 80px;
+        margin-right: 13px;
+      }
 
-    .content {
-      width: 180px;
-    }
+      .content {
+        width: 180px;
+      }
 
-    .contentTitle {
-      margin-bottom: 8px;
-      overflow: hidden;
-      font-size: 18px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+      .contentTitle {
+        margin-bottom: 8px;
+        overflow: hidden;
+        font-size: 18px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
 
-    .contentDetail {
-      font-size: 15px;
-      color: colors.$GRAY6;
+      .contentDetail {
+        font-size: 15px;
+        color: colors.$GRAY6;
 
-      span:last-child {
-        margin-left: 5px;
-        font-size: 14px;
+        span:last-child {
+          margin-left: 5px;
+          font-size: 14px;
+        }
+      }
+
+      .favBtn {
+        margin-left: 13px;
       }
     }
 
-    .favBtn {
-      margin-left: 13px;
+    .observeLi {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      margin: 10px;
+      font-size: 18px;
     }
   }
 }
