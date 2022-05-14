@@ -14,12 +14,29 @@
     position: absolute;
     top: 68px;
     left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 360px;
     height: 40px;
     background-color: colors.$WHITE;
 
     .searchInput {
-      margin-left: 40px;
+      height: 30px;
+      margin-left: 30px;
+    }
+
+    .searchBtn {
+      width: 70px;
+      height: 30px;
+      margin-right: 20px;
+      background-color: colors.$GRAYE;
+      border-radius: 2px;
+      transition: 200ms ease-in-out;
+
+      &:hover {
+        background-color: colors.$GRAYD;
+      }
     }
   }
 
@@ -43,5 +60,14 @@
   .errMsg {
     margin-top: 20px;
     text-align: center;
+  }
+
+  .observeLi {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    margin: 10px;
+    font-size: 18px;
   }
 }

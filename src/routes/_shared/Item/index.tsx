@@ -42,7 +42,14 @@ const Item = ({ movie, included }: Props) => {
   return (
     <li className={styles.item}>
       <div className={styles.itemDiv} role='presentation' onClick={() => handleClick(true)}>
-        <img src={poster} alt='poster' />
+        <img
+          src={poster}
+          alt='poster'
+          onError={(e) => {
+            e.currentTarget.onerror = null
+            e.currentTarget.src = 'https://www.yokogawa.com/public/img/default_image.png'
+          }}
+        />
         <div className={styles.content}>
           <p className={styles.contentTitle}>{title}</p>
           <div className={styles.contentDetail}>

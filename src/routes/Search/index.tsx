@@ -109,7 +109,7 @@ const Search = () => {
           onChange={handleInputChange}
           className={styles.searchInput}
         />
-        <button type='submit' disabled={isSubmitted}>
+        <button type='submit' className={styles.searchBtn} disabled={isSubmitted}>
           검색하기
         </button>
       </form>

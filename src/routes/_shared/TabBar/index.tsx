@@ -8,12 +8,14 @@ const TabBar = () => {
       <ul>
         <li>
           <NavLink to='/search' className={({ isActive }) => cx({ [styles.isActive]: isActive })}>
-            검색
+            <i>🔍</i>
+            <span>검색</span>
           </NavLink>
         </li>
         <li>
           <NavLink to='/favorites' className={({ isActive }) => cx({ [styles.isActive]: isActive })}>
-            즐겨찾기
+            <i>❤️</i>
+            <span>즐겨찾기</span>
           </NavLink>
         </li>
       </ul>
