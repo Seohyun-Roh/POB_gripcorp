@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent } from 'react'
 
-import { useState, useRef, useEffect } from 'hooks'
+import { useState, useRef, useEffect, useUnmount } from 'hooks'
 import { useRecoil } from 'hooks/state'
 import { movieListState } from 'states/movie'
 import { getMovieListApi } from 'services/movie'
@@ -95,6 +95,8 @@ const Search = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalResults])
+
+  useUnmount(resetMovieList)
 
   return (
     <div className={styles.search}>
