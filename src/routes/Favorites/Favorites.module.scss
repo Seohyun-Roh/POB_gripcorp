@@ -9,4 +9,26 @@
   background-color: colors.$MAIN_BACKGROUND_COLOR;
   border-radius: 60px;
   box-shadow: rgba(100, 100, 111, 20%) 0 7px 29px 0;
+
+  .favoritesMain {
+    position: absolute;
+    top: 68px;
+    left: 0;
+    width: 360px;
+    height: 576px;
+    padding: 10px 30px;
+    overflow: scroll;
+    border: 5px solid colors.$WHITE;
+
+    .favoritesList {
+      position: absolute;
+      left: 0;
+      width: 350px;
+    }
+
+    .favoritesMsg {
+      margin-top: 20px;
+      text-align: center;
+    }
+  }
 }

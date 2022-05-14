@@ -1,6 +1,8 @@
 import { useState } from 'hooks'
+import { useRecoil } from 'hooks/state'
 import { cx } from 'styles'
 import { IMovieItem } from 'types/movie.d'
+import { favoriteListState } from 'states/favorite'
 
 import styles from './Item.module.scss'
 
@@ -10,9 +12,11 @@ interface Props {
 }
 
 const Item = ({ movie, included }: Props) => {
-  const { Title: title, Year: year, Type: type, Poster: poster } = movie
+  const [, setFavoriteList] = useRecoil(favoriteListState)
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [isIncluded, setIsIncluded] = useState<boolean>(included)
+
+  const { Title: title, Year: year, Type: type, Poster: poster } = movie
 
   const handleClick = (bool: boolean) => {
     setIsOpen(bool)
@@ -30,7 +34,9 @@ const Item = ({ movie, included }: Props) => {
     }
 
     setIsIncluded((prev) => !prev)
+    setFavoriteList(newFavorites)
     localStorage.setItem('favorites', JSON.stringify(newFavorites))
+    setIsOpen(false)
   }
 
   return (
