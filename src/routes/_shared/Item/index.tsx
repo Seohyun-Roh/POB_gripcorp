@@ -2,7 +2,7 @@ import { useState } from 'hooks'
 import { cx } from 'styles'
 import { IMovieItem } from 'types/movie.d'
 
-import styles from './Search.module.scss'
+import styles from './Item.module.scss'
 
 interface Props {
   movie: IMovieItem

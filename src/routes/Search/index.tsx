@@ -7,8 +7,8 @@ import { getMovieListApi } from 'services/movie'
 
 import styles from './Search.module.scss'
 import Header from 'routes/_shared/Header'
+import Item from 'routes/_shared/Item'
 import TabBar from 'routes/_shared/TabBar'
-import Item from './Item'
 
 const Search = () => {
   const [movieList, setMovieList, resetMovieList] = useRecoil(movieListState)
