@@ -100,7 +100,7 @@ const Search = () => {
 
   return (
     <div className={styles.search}>
-      <Header />
+      <Header title='Movie App 🎞️' />
       <form className={styles.searchForm} onSubmit={handleSubmit}>
         <input
           type='text'

@@ -1,3 +1,4 @@
+import { useMount } from 'hooks'
 import { useRecoil } from 'hooks/state'
 import { favoriteListState } from 'states/favorite'
 
@@ -8,11 +9,15 @@ import TabBar from 'routes/_shared/TabBar'
 import { IMovieItem } from 'types/movie'
 
 const Favorites = () => {
-  const [favoriteList] = useRecoil(favoriteListState)
+  const [favoriteList, setFavoriteList] = useRecoil(favoriteListState)
+
+  useMount(() => {
+    setFavoriteList(JSON.parse(localStorage.getItem('favorites') || '[]'))
+  })
 
   return (
     <div className={styles.favorites}>
-      <Header />
+      <Header title='내 즐겨찾기' />
       <main className={styles.favoritesMain}>
         <ul className={styles.favoritesList}>
           {favoriteList.length !== 0 ? (

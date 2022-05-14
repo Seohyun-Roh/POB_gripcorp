@@ -1,9 +1,13 @@
 import styles from './Header.module.scss'
 
-const Header = () => {
+interface Props {
+  title: string
+}
+
+const Header = ({ title }: Props) => {
   return (
     <header className={styles.header}>
-      <h1>Movie APP 🎞️</h1>
+      <h1>{title}</h1>
     </header>
   )
 }

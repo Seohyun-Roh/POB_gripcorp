@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom'
 import { useState } from 'hooks'
 import { useRecoil } from 'hooks/state'
 import { cx } from 'styles'
@@ -12,6 +13,8 @@ interface Props {
 }
 
 const Item = ({ movie, included }: Props) => {
+  const location = useLocation()
+
   const [, setFavoriteList] = useRecoil(favoriteListState)
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [isIncluded, setIsIncluded] = useState<boolean>(included)
@@ -33,7 +36,12 @@ const Item = ({ movie, included }: Props) => {
       newFavorites = favorites.filter((favorite: { Title: string }) => favorite.Title !== title)
     }
 
-    setIsIncluded((prev) => !prev)
+    if (location.pathname === '/favorites') {
+      setIsIncluded(true)
+    } else {
+      setIsIncluded((prev) => !prev)
+    }
+
     setFavoriteList(newFavorites)
     localStorage.setItem('favorites', JSON.stringify(newFavorites))
     setIsOpen(false)
@@ -62,7 +70,7 @@ const Item = ({ movie, included }: Props) => {
 
       <div className={cx(styles.itemModal, { [styles.isOpen]: isOpen })}>
         <button type='button' className={styles.itemModalBtn} onClick={handleFavoriteClick}>
-          {isIncluded ? '즐겨찾기 취소' : '즐겨찾기'}
+          {isIncluded ? '즐겨찾기 제거' : '즐겨찾기'}
         </button>
         <button type='button' className={styles.itemModalBtn} onClick={() => handleClick(false)}>
           취소
