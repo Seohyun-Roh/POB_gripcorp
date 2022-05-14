@@ -116,7 +116,11 @@ const Search = () => {
           <ul className={styles.itemList}>
             {movieList.map((movie, idx) => {
               const key = `movie-${idx}`
-              return <Item key={key} movie={movie} />
+
+              const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
+              const included = favorites.some((favorite: { Title: string }) => favorite.Title === movie.Title)
+
+              return <Item key={key} movie={movie} included={included} />
             })}
             <li className={styles.observeLi} ref={pageEnd}>
               {isLoading && 'Loading... 😊'}

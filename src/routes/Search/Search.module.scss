@@ -65,7 +65,8 @@
         }
 
         .content {
-          width: 220px;
+          width: 200px;
+          padding-right: 10px;
         }
 
         .contentTitle {
@@ -85,13 +86,18 @@
             font-size: 14px;
           }
         }
+
+        i {
+          margin-right: 10px;
+        }
       }
 
       .itemModal {
         position: absolute;
         top: 20px;
-        right: 20px;
+        right: 60px;
         z-index: 1;
+        display: none;
         text-align: center;
         background-color: colors.$WHITE;
         border: 1px solid colors.$GRAYE;
@@ -104,6 +110,7 @@
           width: 70px;
           height: 30px;
           font-size: 12px;
+          word-break: keep-all;
 
           + .itemModalBtn {
             border-top: 1px solid colors.$GRAYE;
@@ -117,6 +124,7 @@
       }
 
       & .isOpen {
+        display: block;
         opacity: 1;
         transition: 200ms ease;
       }
