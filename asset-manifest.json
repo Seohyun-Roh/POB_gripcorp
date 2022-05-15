@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/wanted_gripcorp/static/css/main.48ab4615.css",
-    "main.js": "/wanted_gripcorp/static/js/main.87c89686.js",
+    "main.js": "/wanted_gripcorp/static/js/main.415c9f90.js",
     "static/js/787.5814f64f.chunk.js": "/wanted_gripcorp/static/js/787.5814f64f.chunk.js",
     "index.html": "/wanted_gripcorp/index.html",
     "main.48ab4615.css.map": "/wanted_gripcorp/static/css/main.48ab4615.css.map",
-    "main.87c89686.js.map": "/wanted_gripcorp/static/js/main.87c89686.js.map",
+    "main.415c9f90.js.map": "/wanted_gripcorp/static/js/main.415c9f90.js.map",
     "787.5814f64f.chunk.js.map": "/wanted_gripcorp/static/js/787.5814f64f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.48ab4615.css",
-    "static/js/main.87c89686.js"
+    "static/js/main.415c9f90.js"
   ]
 }
